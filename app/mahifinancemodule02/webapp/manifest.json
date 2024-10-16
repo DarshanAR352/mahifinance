@@ -1,0 +1,334 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "mahifinancemodule02",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.15.1",
+      "toolsId": "7fd4e616-4965-4c43-9f33-f8f2ad1337f6"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/my/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "mahindra-Display": {
+          "semanticObject": "mahindra",
+          "action": "Display",
+          "title": "{{flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.129.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "mahifinancemodule02.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "PurchaseOrderList",
+          "target": "PurchaseOrderList"
+        },
+        {
+          "pattern": "PurchaseOrder({key}):?query:",
+          "name": "PurchaseOrderObjectPage",
+          "target": "PurchaseOrderObjectPage"
+        },
+        {
+          "name": "SalesOrderObjectPage",
+          "pattern": "SalesOrder({SalesOrderKey}):?query:",
+          "target": "SalesOrderObjectPage"
+        },
+        {
+          "name": "PaymentDetailsObjectPage",
+          "pattern": "PaymentDetails({PaymentDetailsKey}):?query:",
+          "target": "PaymentDetailsObjectPage"
+        }
+      ],
+      "targets": {
+        "PurchaseOrderList": {
+          "type": "Component",
+          "id": "PurchaseOrderList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/PurchaseOrder",
+              "variantManagement": "Page",
+              "navigation": {
+                "PurchaseOrder": {
+                  "detail": {
+                    "route": "PurchaseOrderObjectPage"
+                  }
+                },
+                "SalesOrder": {
+                  "detail": {
+                    "route": "SalesOrderObjectPage"
+                  }
+                },
+                "PaymentDetails": {
+                  "detail": {
+                    "route": "PaymentDetailsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              },
+              "views": {
+                "paths": [
+                  {
+                    "key": "tableView",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView"
+                  },
+                  {
+                    "key": "tableView1",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView",
+                    "entitySet": "SalesOrder"
+                  },
+                  {
+                    "key": "tableView11",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView1",
+                    "entitySet": "SalesOrder"
+                  },
+                  {
+                    "key": "tableView12",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView",
+                    "entitySet": "PaymentDetails"
+                  },
+                  {
+                    "key": "tableView2",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView2",
+                    "entitySet": "SalesOrder"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "PurchaseOrderObjectPage": {
+          "type": "Component",
+          "id": "PurchaseOrderObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/PurchaseOrder",
+              "content": {
+                "header": {
+                  "actions": {
+                    "generateso": {
+                      "press": "mahifinancemodule02.ext.controller.GenerateSO.GenerateSO",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "Generate sales Order",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "EditAction"
+                      }
+                    }
+                  }
+                },
+                "body": {
+                  "sections": {
+                    "Vehicle_details": {
+                      "template": "mahifinancemodule02.ext.fragment.Vehicle_details",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Customer_Details"
+                      },
+                      "title": "Item_Details"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SalesOrderObjectPage": {
+          "type": "Component",
+          "id": "SalesOrderObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/SalesOrder",
+              "content": {
+                "header": {
+                  "actions": {
+                    "approve": {
+                      "press": "mahifinancemodule02.ext.controller.APPROVE.APPROVE",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "APPROVE",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "EditAction"
+                      }
+                    }
+                  }
+                },
+                "body": {
+                  "sections": {
+                    "Item_Details": {
+                      "template": "mahifinancemodule02.ext.fragment.Item_Details",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Customer_Details"
+                      },
+                      "title": "Item_Details"
+                    },
+                    "Vehicle_allocation": {
+                      "template": "mahifinancemodule02.ext.fragment.Vehicle_allocation",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Payment_details"
+                      },
+                      "title": "Vehicle_Allocation"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "PaymentDetailsObjectPage": {
+          "type": "Component",
+          "id": "PaymentDetailsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/PaymentDetails",
+              "content": {
+                "footer": {
+                  "actions": {
+                    "invoice": {
+                      "press": "mahifinancemodule02.ext.controller.Invoice.Invoice",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "Generate Invoice"
+                    }
+                  }
+                },
+                "body": {
+                  "sections": {
+                    "Invoice_Pdf": {
+                      "template": "mahifinancemodule02.ext.fragment.Invoice_Pdf",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Payment_details"
+                      },
+                      "title": "invoicepdf"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ListReport.ListReportController": {
+            "controllerName": "mahifinancemodule02.ext.controller.Listpage"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController#mahifinancemodule02::PurchaseOrderObjectPage": {
+            "controllerName": "mahifinancemodule02.ext.controller.Po_obj"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController#mahifinancemodule02::SalesOrderObjectPage": {
+            "controllerName": "mahifinancemodule02.ext.controller.Salesorderobj"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController#mahifinancemodule02::PaymentDetailsObjectPage": {
+            "controllerName": "mahifinancemodule02.ext.controller.Paymentobj"
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "mahindrafinance02solution"
+  }
+}
